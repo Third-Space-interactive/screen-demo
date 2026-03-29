@@ -1,0 +1,9 @@
+node_modules/
+dist/
+output/
+public/recording.*
+public/sfx/*.mp3
+public/sfx/*.wav
+*.mp4
+*.mkv
+*.webm

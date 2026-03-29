@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "url": "example",
+    "viewportWidth": 1920,
+    "viewportHeight": 1080,
+    "totalDurationMs": 5000,
+    "recordingStart": "2026-01-01T00:00:00.000Z"
+  },
+  "moments": [
+    {
+      "id": 1,
+      "type": "click",
+      "timestamp": 1000,
+      "description": "Example click",
+      "cursor": { "x": 960, "y": 540 },
+      "target": { "x": 940, "y": 520, "width": 40, "height": 40 }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "totalDurationFrames": 150,
+  "fps": 30,
+  "defaultZoom": 1.0,
+  "segments": [
+    {
+      "momentId": 1,
+      "startFrame": 30,
+      "endFrame": 60,
+      "speed": 1.0,
+      "zoom": 1.6,
+      "zoomTarget": { "x": 960, "y": 540 },
+      "easeInFrames": 15,
+      "easeOutFrames": 20,
+      "description": "Zoom to example click"
+    }
+  ]
+}
