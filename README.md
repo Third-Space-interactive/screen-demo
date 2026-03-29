@@ -7,7 +7,9 @@ Like [Screen Studio](https://www.screen.studio/), but free, cross-platform, and 
 <!-- Replace the URL below after uploading assets/demo-preview.mp4 to GitHub:
      Edit this README on GitHub, drag-drop the video into the editor, and paste the generated URL -->
 
-https://github.com/user-attachments/assets/PLACEHOLDER
+https://github.com/user-attachments/assets/50f0b9c1-512d-49a4-a917-69c4ae720620
+
+
 
 ## Features
 
