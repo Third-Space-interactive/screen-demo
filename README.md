@@ -40,53 +40,61 @@ npm install
 pip install -r requirements.txt
 ```
 
-### OBS Mode (manual recording)
+### OBS Mode (one command)
 
-Record your screen with OBS while the input logger captures every click, drag, and keystroke.
+Record your screen with OBS while the session script handles everything else.
 
 **1. Enable OBS WebSocket** -- OBS > Tools > WebSocket Server Settings
 
-**2. Start the input logger**
+**2. Run a session**
 
 ```bash
-python scripts/log-inputs.py my-video --viewport 2560x1440 --obs --obs-password YOUR_PASSWORD
+python scripts/session.py my-video --viewport 2560x1440 --obs-password YOUR_PASSWORD
 ```
 
-The logger connects to OBS and waits. Hit Record in OBS -- the logger starts its clock automatically. Stop recording -- it saves `moments.json` and exits.
+**3. Hit Record in OBS, do your thing, stop recording.** The session script automatically:
+- Captures all mouse/keyboard inputs synced to the recording
+- Saves `moments.json`
+- Finds and copies the OBS video file to the right locations
+- Generates the edit plan with zoom segments
+- Updates `Root.tsx` to point at your data
+- Launches Remotion Studio for preview
 
-**3. Copy your recording**
+**4. Preview, tweak, render**
+
+Scrub through the preview in Remotion Studio. If a zoom needs adjusting, edit `data/my-video/edit-plan.json` directly. When you're happy:
 
 ```bash
+npm run render -- --output output/my-video/demo.mp4
+```
+
+Optional flags:
+- `--exclude 400,50,150,60` -- skip zoom for a screen region (e.g. toolbar buttons)
+- `--zoom 1.6` -- default zoom level for clicks
+- `--type-zoom 1.8` -- zoom level for typing moments
+- `--fps 60` -- frame rate (should match your recording)
+- `--no-studio` -- skip launching Remotion Studio after recording
+
+### OBS Mode (step by step)
+
+If you prefer manual control, you can run each step individually:
+
+```bash
+# 1. Capture inputs (connects to OBS WebSocket)
+python scripts/log-inputs.py my-video --viewport 2560x1440 --obs --obs-password YOUR_PASSWORD
+
+# 2. Copy your recording
 cp ~/Videos/your-recording.mkv data/my-video/recording.mkv
 cp data/my-video/recording.mkv public/recording.mkv
-```
 
-**4. Generate the edit plan**
-
-```bash
+# 3. Generate edit plan
 python scripts/build-edit-plan.py my-video
-```
 
-This analyzes your input events and auto-generates zoom segments:
-- Clicks get zoom-to-click animations
-- Consecutive clicks in the same area cluster into one smooth pan
-- Drags stay at full viewport (no zoom)
-- Typing merges into the preceding click's zoom
+# 4. Update Root.tsx imports to point at data/my-video/, set showCursor: false
 
-**5. Update Root.tsx** to point at your data:
-
-```tsx
-import editPlanData from "../data/my-video/edit-plan.json";
-import momentsData from "../data/my-video/moments.json";
-```
-
-Set `showCursor: false` (your real cursor is in the OBS recording).
-
-**6. Preview and render**
-
-```bash
-npm start              # opens Remotion Studio
-npm run render         # renders to output/
+# 5. Preview and render
+npm start
+npm run render
 ```
 
 ### Browser Mode (automated recording)
